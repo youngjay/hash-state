@@ -1,0 +1,28 @@
+{
+  "name": "hash-state",
+  "version": "1.0.0",
+  "description": "global state bus persist with hash(#)",
+  "main": "index.js",
+  "dependencies": {
+    "mixin-class": "~1.0.1",
+    "knockout": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/youngjay/hash-state.git"
+  },
+  "keywords": [
+    "app",
+    "state"
+  ],
+  "author": "hiyoungjay@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/youngjay/hash-state/issues"
+  },
+  "homepage": "https://github.com/youngjay/hash-state"
+}
