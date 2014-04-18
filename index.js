@@ -3,7 +3,7 @@ var ko = require('knockout');
 var hashParser = require('./lib/hash-parser');
 
 module.exports = require('mixin-class')(
-    function(redirects, win) {
+    function(redirects, win/* for mock */) {
         this.redirects = redirects || {};
         this.window = win || window;
         this._hash = ko.observable('');
@@ -36,25 +36,27 @@ module.exports = require('mixin-class')(
 
         _start: function() {
             var self = this;
+            var window = this.window;
+            var location = window.location;
 
             var setHash = function() {
-                var hash = self.window.location.hash;
+                var hash = location.hash;
                 var redirectedHash = self._applyRedirectHash(hash);
 
                 if (redirectedHash === hash) {
                     self._hash(redirectedHash);
                 } else {
-                    self.window.location.replace(redirectedHash);
+                    location.replace(redirectedHash);
                 }                   
             };
 
-            ko.utils.registerEventHandler(this.window, 'hashchange', setHash);
+            ko.utils.registerEventHandler(window, 'hashchange', setHash);
 
             setHash();
 
             // must after location.hash > self._hash
             ko.computed(function() {
-                self.window.location.hash = self._applyRedirectHash(self._hash());                                
+                location.hash = self._applyRedirectHash(self._hash());                                
             });
         },
 
@@ -74,7 +76,7 @@ module.exports = require('mixin-class')(
 
                 switch (typeof redirector) {
                     case 'function':
-                        data = redirector(data);
+                        data = redirector(data) || data;
                         break;
                     case 'object':
                         data.path = redirector.path;
