@@ -34,7 +34,8 @@ location.hash = '#/e';
 
 // '#/e'
 {
-    path: '/e'
+    path: '/e',
+    query: {}
 }
 
 ```
