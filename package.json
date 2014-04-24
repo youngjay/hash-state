@@ -1,6 +1,6 @@
 {
   "name": "hash-state",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "global state bus persist with hash(#)",
   "main": "index.js",
   "dependencies": {
