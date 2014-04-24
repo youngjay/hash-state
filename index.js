@@ -1,8 +1,8 @@
 var ko = require('knockout');
+var mixin = require('mixin-class')
 
-var hashParser = require('./lib/hash-parser');
 
-module.exports = require('mixin-class')(
+var HashState = mixin(
     function(redirects, win/* for mock */) {
         this.redirects = redirects || {};
         this.window = win || window;
@@ -12,9 +12,9 @@ module.exports = require('mixin-class')(
     {
         data: function(input) {
             if (input) {
-                this._hash(hashParser.stringify(input));
+                this._hash(HashState.stringify(input));
             } else {
-                return hashParser.parse(this._hash());
+                return HashState.parse(this._hash());
             }
         },
 
@@ -61,7 +61,7 @@ module.exports = require('mixin-class')(
         },
 
         _applyRedirectHash: function(hash) {
-            return hashParser.stringify(this._applyRedirectData(hashParser.parse(hash)));
+            return HashState.stringify(this._applyRedirectData(HashState.parse(hash)));
         },
 
         _applyRedirectData: function(data) {                
@@ -101,3 +101,9 @@ module.exports = require('mixin-class')(
         }
     }
 );
+
+var hashParser = require('./lib/hash-parser');
+HashState.parse = hashParser.parse;
+HashState.stringify = hashParser.stringify;
+
+module.exports = HashState;
