@@ -14,7 +14,7 @@ var HashState = mixin(
             if (input) {
                 this._hash(HashState.stringify(input));
             } else {
-                return HashState.parse(this._hash());
+                return HashState.parse(this._hash.peek());
             }
         },
 
@@ -27,7 +27,14 @@ var HashState = mixin(
             } else {
                 return this.data().query;
             }
-        },                
+        },   
+
+        computed: function(fn, context) {
+            ko.computed(function() {
+                this._hash();
+                fn.call(context)
+            }, this);
+        },          
 
         reload: function() {
             this._hash.valueWillMutate();
